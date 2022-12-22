@@ -9,7 +9,7 @@ services:
     env_file:
       - ./.env
   web: 
-    image: zhannaven/api_yamdb:v1
+    image: zhannaven/yamdb_final:latest
     restart: always
     volumes:
       - static_value:/app/static/
