@@ -23,8 +23,6 @@
 - DockerHub
 - GitHub Actions (CI/CD)
 
-### Как запустить проект (в Unix)
-
 ### Шаблон описания файла .env
  - DB_ENGINE=django.db.backends.postgresql
  - DB_NAME=postgres
@@ -32,7 +30,9 @@
  - POSTGRES_PASSWORD=postgres
  - DB_HOST=db
  - DB_PORT=5432
- - SECRET_KEY=<секретный ключ проекта django>
+ - SECRET_KEY=<секретный ключ проекта Django>
+
+### Как запустить проект (в Unix) 
 - Клонировать репозиторий и перейти в него в командной строке.
 
 ```bash
@@ -59,15 +59,15 @@ scp nginx.conf <username>@<host>:/home/<username>/nginx.conf
     ```
     DB_ENGINE=<django.db.backends.postgresql>
     DB_NAME=<имя базы данных postgres>
-    DB_USER=<пользователь бд>
+    DB_USER=<пользователь БД>
     DB_PASSWORD=<пароль>
     DB_HOST=<db>
     DB_PORT=<5432>
     
     DOCKER_PASSWORD=<пароль от DockerHub>
-    DOCKER_USERNAME=<имя пользователя>
+    DOCKER_USERNAME=<имя пользователя на DockerHub>
     
-    SECRET_KEY=<секретный ключ проекта django>
+    SECRET_KEY=<секретный ключ проекта Django>
 
     USER=<username для подключения к серверу>
     HOST=<IP сервера>
@@ -78,10 +78,11 @@ scp nginx.conf <username>@<host>:/home/<username>/nginx.conf
     TELEGRAM_TOKEN=<токен вашего бота>
     ```
     Workflow состоит из четырёх шагов:
-     - Проверка кода на соответствие PEP8
-     - Сборка и публикация образа бекенда на DockerHub.
+     - Проверка кода на соответствие PEP8;
+     - сборка и доставка докер-образа для контейнера web на Docker Hub;
      - Автоматический деплой на удаленный сервер.
      - Отправка уведомления в телеграм-чат.
+
 - собрать и запустить контейнеры на сервере:
 ```bash
 docker-compose up -d --build
