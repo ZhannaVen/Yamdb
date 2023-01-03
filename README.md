@@ -1,17 +1,17 @@
-### Яндекс.Практикум - групповой проект YaMDb.
+### API for YaMDb
 [![Django-app workflow](https://github.com/zhannaven/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg?branch=master)](https://github.com/zhannaven/yamdb_final/actions/workflows/yamdb_workflow.yml)
-### Описание
- - Задача группового проекта — написать бэкенд (приложение reviews) и API для него (приложение api) так, чтобы они полностью соответствовали документации.
- - Проект YaMDb собирает отзывы (Review) пользователей на произведения (Title).
- - Произведения делятся на категории: «Книги», «Фильмы», «Музыка».
- - Список категорий (Category) может быть расширен (например, можно добавить категорию «Изобразительное искусство» или «Ювелирка»).
-> - Сами произведения в YaMDb не хранятся, здесь нельзя посмотреть фильм или послушать музыку.
-> - В каждой категории есть произведения: книги, фильмы или музыка. Например, в категории «Книги» могут быть произведения «Винни Пух и все-все-все» и «Марсианские хроники», а в категории «Музыка» — песня «Давеча» группы «Насекомые» и вторая сюита Баха. Произведению может быть присвоен жанр из списка предустановленных (например, «Сказка», «Рок» или «Артхаус»). Новые жанры может создавать только администратор.
-> - Благодарные или возмущённые читатели оставляют к произведениям текстовые отзывы (Review) и выставляют произведению рейтинг (оценку в диапазоне от одного до десяти). Из множества оценок автоматически высчитывается средняя оценка произведения.
+### Description
+ - The main goal of the group project is to write a backend (reviews application) and an API for it (api application).
+ - The YaMDb project collects reviews (Review) on works (or compositions) (Titles).
+  - Works (or compositions?) are divided into categories: "Books", "Films", "Music".
+ - The list of categories (Category) can be expanded (for example, you can add the category "Fine Arts" or "Jewellery").
+> - The works are not stored in YaMDb, you can’t watch a movie or listen to music here.
+> - A work can be assigned a genre from the predefined list (for example, Fairy Tale, Rock or Arthouse). New genres can only be created by the administrator.
+> - Users can leave a comment on the work and rate it (score in the range from one to ten). The average rating of the work is automatically calculated.
 
-Ознакомиться с документаций к реализованному API можно по адресу [/redoc]
+You can read the documentation for the implemented API at [/redoc]
 
-### Используемые фреймворки и библиотеки:
+### Used frameworks and libraries:
 - Python 3.7
 - Django 2.2.16
 - DRF 3.12.4
@@ -23,7 +23,7 @@
 - DockerHub
 - GitHub Actions (CI/CD)
 
-### Шаблон описания файла .env
+### Template description of .env
  - DB_ENGINE=django.db.backends.postgresql
  - DB_NAME=postgres
  - POSTGRES_USER=postgres
@@ -32,97 +32,100 @@
  - DB_PORT=5432
  - SECRET_KEY=<секретный ключ проекта Django>
 
-### Как запустить проект (в Unix) 
-- Клонировать репозиторий и перейти в него в командной строке.
+### How to start a project (в Unix) 
+- Clone repository:
 
 ```bash
 git clone git@github.com:ZhannaVen/yamdb_final.git
 ```
-- Выполнить вход на удаленный сервер
-- Установить docker на сервер:
+- Log in to a remote server
+- Install docker on the server:
 ```bash
 sudo apt install docker.io 
 ```
-- Установить docker-compose на сервер:
+- Install docker-compose on the server:
 ```bash
 curl -SL https://github.com/docker/compose/releases/download/v2.14.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ```
-- Локально отредактировать файл infra/nginx.conf, обязательно в строке server_name вписать IP-адрес сервера
-- Скопировать файлы docker-compose.yml и nginx.conf из директории infra на сервер:
+- Edit file locally infra/nginx.conf, be sure to enter the server's IP address in the server_name line
+- Copy the docker-compose.yml and nginx.conf files from the infra directory to the server:
 ```bash
 scp docker-compose.yml <username>@<host>:/home/<username>/docker-compose.yml
 scp nginx.conf <username>@<host>:/home/<username>/nginx.conf
 ```
-- Создать .env файл по предлагаемому выше шаблону. Обязательно изменить значения POSTGRES_USER и POSTGRES_PASSWORD
-- Для работы с Workflow добавить в Secrets GitHub переменные окружения для работы:
+- Create .env according to the template above. Be sure to change the POSTGRES_USER and POSTGRES_PASSWORD values
+- To work with Workflow, add environment variables to Secrets GitHub for work:
     ```
     DB_ENGINE=<django.db.backends.postgresql>
-    DB_NAME=<имя базы данных postgres>
-    DB_USER=<пользователь БД>
-    DB_PASSWORD=<пароль>
+    DB_NAME=<postgres database name>
+    DB_USER=<database user>
+    DB_PASSWORD=<password>
     DB_HOST=<db>
     DB_PORT=<5432>
     
-    DOCKER_PASSWORD=<пароль от DockerHub>
-    DOCKER_USERNAME=<имя пользователя на DockerHub>
+    DOCKER_PASSWORD=<password from DockerHub>
+    DOCKER_USERNAME=<username on DockerHub>
     
-    SECRET_KEY=<секретный ключ проекта Django>
+    SECRET_KEY=<Django project secret key>
 
-    USER=<username для подключения к серверу>
-    HOST=<IP сервера>
-    PASSPHRASE=<пароль для сервера, если он установлен>
-    SSH_KEY=<ваш SSH ключ (для получения команда: cat ~/.ssh/id_rsa)>
+    USER=<username to connect to the server>
+    HOST=<IP of the server>
+    PASSPHRASE=<password for the server, if set>
+    SSH_KEY=<your SSH key (command: cat ~/.ssh/id_rsa)>
 
-    TELEGRAM_TO=<ID чата, в который придет сообщение>
-    TELEGRAM_TOKEN=<токен вашего бота>
+    TELEGRAM_TO=<ID of the chat where the message will be sent>
+    TELEGRAM_TOKEN=<тyour bot token>
     ```
-    Workflow состоит из четырёх шагов:
-     - Проверка кода на соответствие PEP8;
-     - сборка и доставка докер-образа для контейнера web на Docker Hub;
-     - Автоматический деплой на удаленный сервер.
-     - Отправка уведомления в телеграм-чат.
+    Four steps of Workflow:
+     - Checking code for PEP8 compliance;
+     - building and delivering a docker image for the web container on Docker Hub;
+     - Automatic deployment to a remote server;
+     - Sending a notification to a telegram chat.
 
-- собрать и запустить контейнеры на сервере:
+- build and run containers on the server:
 ```bash
 docker-compose up -d --build
 ```
-- После успешной сборки выполнить следующие действия (только при первом деплое):
-    * провести миграции внутри контейнеров:
+- After a successful build, perform the following steps (only for the first deployment):
+    * run migrations inside containers:
     ```bash
     docker-compose exec web python manage.py migrate
     ```
-    * собрать статику проекта:
+    * collect statics:
     ```bash
     docker-compose exec web python manage.py collectstatic --no-input
     ```  
-    * Создать суперпользователя Django, после запроса от терминала ввести логин и пароль для суперпользователя:
+    * Create a Django superuser, after prompting from the terminal, enter the username and password for the superuser:
     ```bash
     docker-compose exec web python manage.py createsuperuser
     ```
 
-### Команды для заполнения базы данными
-- Заполнить базу данными
-- Создать резервную копию данных:
+### Filling the database
+- Fill the database with data
+- Back up your data:
 ```bash
 docker-compose exec web python manage.py dumpdata > fixtures.json
 ```
-- Остановить и удалить неиспользуемые элементы инфраструктуры Docker:
+- Stop and remove unused elements of the Docker infrastructure:
 ```bash
 docker-compose down -v --remove-orphans
 ```
 
-### Роли пользователей
+### User roles
 
-- Аноним — может просматривать описания произведений, читать отзывы и комментарии.
-- Аутентифицированный пользователь (user) — может, как и Аноним, читать всё, дополнительно он может публиковать отзывы и ставить оценку произведениям (фильмам/книгам/песенкам), может комментировать чужие отзывы; может редактировать и удалять свои отзывы и комментарии. Эта роль присваивается по умолчанию каждому новому пользователю.
-- Модератор (moderator) — те же права, что и у Аутентифицированного пользователя плюс право удалять любые отзывы и комментарии.
-- Администратор (admin) — полные права на управление всем контентом проекта. Может создавать и удалять произведения, категории и жанры. Может назначать роли пользователям.
-- Суперюзер Django — обладает правами администратора (admin)
+- Anonymous - can view descriptions of works, read reviews and comments.
+- Authenticated user (user) - can, like Anonymous, read everything, in addition, can publish reviews and rate works (films / books / songs), can comment on other people's reviews; can edit and delete his own reviews and comments. This role is assigned by default to every new user.
+- Moderator (moderator) - has the same rights as the Authenticated user plus the right to remove any reviews and comments.
+- Administrator (admin) - has full rights to manage all project content. Admin can create and delete works, categories and genres. Can assign roles to users.
+- Django Superuser - has administrator rights (admin)
 
-## Проект сделан в рамках учебного процесса специализации Python-разработчик
+## The project was made as part of the educational process of the Python developer specialization
 
-В разработке принимали участие:
-- [Дмитрий - teamlead](https://github.com/vdycoder)
-- [Жанна - developer](https://github.com/ZhannaVen)
-- [Любовь - developer](https://github.com/Lakrica22)
+Participants:
+- [Dmitriy - teamlead](https://github.com/vdycoder)
+- [Zhanna - developer](https://github.com/ZhannaVen)
+- [Luibov - developer](https://github.com/Lakrica22)
+
+
+Обязательно дописать своб роль и по докеру тоже
