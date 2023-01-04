@@ -127,5 +127,9 @@ Participants:
 - [Zhanna - developer](https://github.com/ZhannaVen)
 - [Luibov - developer](https://github.com/Lakrica22)
 
+### My tasks
 
-Обязательно дописать своб роль и по докеру тоже
+- Models, views and endpoints for: works, categories, genres;
+- Implementing data import from csv;
+- Works rating;
+- ДОПИСАТЬ ПРО ДОКЕР ФАЙЛ, ACTIONS!!!
