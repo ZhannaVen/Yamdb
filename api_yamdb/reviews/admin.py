@@ -12,7 +12,7 @@ class CategoryAdmin(admin.ModelAdmin):
     )
     search_fields = ('name',)
     list_filter = ('name',)
-    empty_value_display = '-пусто-'
+    empty_value_display = '-empty-'
 
 
 @admin.register(Comment)
@@ -25,7 +25,7 @@ class CommentAdmin(admin.ModelAdmin):
     )
     search_fields = ('review',)
     list_filter = ('review',)
-    empty_value_display = '-пусто-'
+    empty_value_display = '-empty-'
 
 
 @admin.register(Genre)
@@ -36,7 +36,7 @@ class GenreAdmin(admin.ModelAdmin):
     )
     search_fields = ('name',)
     list_filter = ('name',)
-    empty_value_display = '-пусто-'
+    empty_value_display = '-empty-'
 
 
 @admin.register(Review)
@@ -50,7 +50,7 @@ class ReviewAdmin(admin.ModelAdmin):
     )
     search_fields = ('pub_date', 'score')
     list_filter = ('pub_date', 'score')
-    empty_value_display = '-пусто-'
+    empty_value_display = '-empty-'
 
 
 @admin.register(Title)
@@ -63,7 +63,7 @@ class TitleAdmin(admin.ModelAdmin):
     )
     search_fields = ('name',)
     list_filter = ('name',)
-    empty_value_display = '-пусто-'
+    empty_value_display = '-empty-'
 
 
 admin.site.unregister(Group)

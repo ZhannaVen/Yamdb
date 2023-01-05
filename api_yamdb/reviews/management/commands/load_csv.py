@@ -19,9 +19,8 @@ DATASET = {
 
 
 class Command(BaseCommand):
-    """
-    Загрузка данных в базу из соответствующих csv файлов
-    выполняется командой python manage.py load_csv
+    """Loading data into the database from the corresponding csv
+    files is performed by the python manage.py load_csv command.
     """
     def handle(self, *args, **kwargs):
         try:
@@ -35,8 +34,8 @@ class Command(BaseCommand):
                     model.objects.bulk_create(
                         model(**data) for data in reader)
                     csv_data.close()
-            self.stdout.write(self.style.SUCCESS('Все данные загружены'))
+            self.stdout.write(self.style.SUCCESS('All data is loaded'))
         except Exception as error:
             self.stdout.write(
                 self.style.ERROR(
-                    f'Ошибка при загрузке данных {file_name}: {error}'))
+                    f'There is an error in loading data {file_name}: {error}'))
