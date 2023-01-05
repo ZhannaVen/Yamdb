@@ -2,12 +2,12 @@
 [![Django-app workflow](https://github.com/zhannaven/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg?branch=master)](https://github.com/zhannaven/yamdb_final/actions/workflows/yamdb_workflow.yml)
 ### Description
  - The main goal of the group project is to write a backend (reviews application) and an API for it (api application).
- - The YaMDb project collects reviews (Review) on works (or compositions) (Titles).
-  - Works (or compositions?) are divided into categories: "Books", "Films", "Music".
- - The list of categories (Category) can be expanded (for example, you can add the category "Fine Arts" or "Jewellery").
-> - The works are not stored in YaMDb, you can’t watch a movie or listen to music here.
+ - The YaMDb project collects reviews (Review) on compositions (Titles).
+  - Compositions are divided into categories: "Books", "Films", "Music".
+ - The list of categories can be expanded (for example, you can add the category "Fine Arts" or "Jewellery").
+> - The works are not stored in YaMDb, you can’t watch a movie or listen to a song here.
 > - A work can be assigned a genre from the predefined list (for example, Fairy Tale, Rock or Arthouse). New genres can only be created by the administrator.
-> - Users can leave a comment on the work and rate it (score in the range from one to ten). The average rating of the work is automatically calculated.
+> - Users can leave a comment on the composition and rate it (score in the range from one to ten). The average rating of the composition is automatically calculated.
 
 You can read the documentation for the implemented API at [/redoc]
 
