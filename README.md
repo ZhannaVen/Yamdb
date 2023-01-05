@@ -132,4 +132,4 @@ Participants:
 - Models, views and endpoints for: compositions, categories, genres;
 - Implementing data import from csv;
 - Composition rating;
-- ДОПИСАТЬ ПРО ДОКЕР ФАЙЛ, ACTIONS!!!
+- ДОПИСАТЬ ПРО Dockerfile, Docker-compose, ACTIONS!!!
