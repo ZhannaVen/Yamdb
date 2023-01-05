@@ -129,7 +129,7 @@ Participants:
 
 ### My tasks
 
-- Models, views and endpoints for: works, categories, genres;
+- Models, views and endpoints for: compositions, categories, genres;
 - Implementing data import from csv;
-- Works rating;
+- Composition rating;
 - ДОПИСАТЬ ПРО ДОКЕР ФАЙЛ, ACTIONS!!!
