@@ -3,8 +3,7 @@ from reviews.models import Title
 
 
 class TitleFilter(filters.FilterSet):
-    """
-     Настройка фильтрации отображений произведений.
+    """Filtering the display of compositions.
     """
     genre = filters.CharFilter(
         field_name='genre__slug',

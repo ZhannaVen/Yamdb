@@ -18,7 +18,7 @@ class UserMeOrAdmin(permissions.BasePermission):
 
 
 class IsAdminModerAuthorOrReadOnly(permissions.BasePermission):
-    """Полные права доступа у Автора, Модератора, Админа.
+    """Admin, Moderator, Author have full rights.
     """
     def has_permission(self, request, view):
         return (
@@ -36,8 +36,7 @@ class IsAdminModerAuthorOrReadOnly(permissions.BasePermission):
 
 
 class IsAdminOrReadOnly(permissions.BasePermission):
-    """
-    Полные права доступа у Админа.
+    """Admin has full rights.
     """
     def has_permission(self, request, view):
         return (

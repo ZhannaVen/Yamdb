@@ -109,7 +109,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     def validate_score(self, value):
         if 0 > value > 10:
-            raise serializers.ValidationError('Оценка по 10-бальной шкале!')
+            raise serializers.ValidationError('Rating on a 10-point scale!')
         return value
 
     def validate(self, data):
@@ -120,7 +120,7 @@ class ReviewSerializer(serializers.ModelSerializer):
             user = self.context['request'].user
             if user.reviews.filter(title_id=title_id).exists():
                 raise serializers.ValidationError(
-                    'Нельзя оставить отзыв на одно произведение дважды'
+                    'You can not review the same composition twice.'
                 )
         return data
 

@@ -23,23 +23,23 @@ from .utils import send_email
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def auth_signup(request):
-    """
-    Отправляет код подтверждения на переданный email. Авторизация не требуется.
-    Запрещено использовать значение 'me' в качестве имени пользователя.
-    Поля email и username должны быть уникальными.
+    """Sending a confirmation code to the email.
+    Authorization is not required.
+    It is forbidden to use the value 'me' as a username.
+    The email and the username fields must be unique.
     """
     serializer = SignUpSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     user = serializer.save()
     email_body = (
-        f'Приветствуем Вас, {user.username}!'
-        '\nДля завершения регистрации в сервисе YaMDB'
-        f' укажите данный проверочный код: {user.confirmation_code}'
+        f'You are welcome, {user.username}!'
+        '\nTo complete the registration in the YaMDB service'
+        f' enter verification code: {user.confirmation_code}'
     )
     data = {
         'email_body': email_body,
         'to_email': user.email,
-        'email_subject': 'Код подтверждения для доступа к API!'
+        'email_subject': 'API access confirmation code!'
     }
     send_email(data)
     return Response(serializer.data, status=status.HTTP_200_OK)
@@ -48,9 +48,8 @@ def auth_signup(request):
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def get_auth_token(request):
-    """
-    Получение JWT-токена при соответствии username и confirmation code.
-    Авторизация не требуется
+    """Getting a JWT token if username and confirmation code match.
+    Authorization is not required.
     """
     serializer = GetTokenSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -59,22 +58,21 @@ def get_auth_token(request):
         user = User.objects.get(username=data['username'])
     except User.DoesNotExist:
         return Response(
-            {'username': 'Пользователь не обнаружен'},
+            {'username': 'User not found'},
             status=status.HTTP_404_NOT_FOUND)
     if data.get('confirmation_code') == user.confirmation_code:
         token = RefreshToken.for_user(user).access_token
         return Response({'token': str(token)},
                         status=status.HTTP_201_CREATED)
     return Response(
-        {'confirmation_code': 'Предоставлен неверный код подтверждения'},
+        {'confirmation_code': 'Invalid verification code provided'},
         status=status.HTTP_400_BAD_REQUEST)
 
 
 class UsersViewSet(viewsets.ModelViewSet):
-    """
-    Получение данных о пользователях. Доступно для роли Администратор
-    Для аутентифицированных пользователей для редактирования собственных данных
-    доступен эндпоинт /users/me/
+    """Getting data about users. Available for Admin role.
+    Endpoint /users/me/ is available for authenticated
+    users to edit their own data.
     """
     queryset = User.objects.all()
     serializer_class = UsersSerializer
@@ -108,9 +106,8 @@ class UsersViewSet(viewsets.ModelViewSet):
 
 
 class CategoryViewSet(CustomMixin):
-    """
-    Получение всех категорий.
-    Добавление, изменение, удаление определенной категории.
+    """Getting all categories.
+    Adding, changing, deleting a certain category.
     """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -121,9 +118,8 @@ class CategoryViewSet(CustomMixin):
 
 
 class GenreViewSet(CustomMixin):
-    """
-    Получение всех жанров.
-    Добавление, изменение, удаление определенного жанра.
+    """Getting all genres.
+    Adding, changing, deleting a certain genre.
     """
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
@@ -134,9 +130,8 @@ class GenreViewSet(CustomMixin):
 
 
 class TitleViewSet(viewsets.ModelViewSet):
-    """
-    Получение всех произведений.
-    Добавление, изменение, удаление определенного произведения.
+    """Getting all compositions.
+    Adding, changing, deleting a certain composition.
     """
     queryset = Title.objects.all().annotate(rating=Avg('reviews__score'))
     permission_classes = (IsAdminOrReadOnly,)
@@ -151,8 +146,8 @@ class TitleViewSet(viewsets.ModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     """
-    Получение всех комментариев.
-    Добавление, изменение, удаление определенного комментария.
+    Getting all comments.
+    Adding, changing, deleting a certaing comment.
     """
     serializer_class = CommentSerializer
     permission_classes = (
@@ -176,9 +171,8 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
-    """
-    Получение всех ревью.
-    Добавление, изменение, удаление определенного ревью.
+    """Getting all reviews.
+    Adding, changing, deleting a certain review.
     """
     serializer_class = ReviewSerializer
     permission_classes = (
